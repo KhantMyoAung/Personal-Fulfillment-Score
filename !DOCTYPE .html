@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Personal Fulfillment Score Explorer</title>
+<style>
+  body { font-family: Arial, sans-serif; background:#121212; color:#eee; padding:20px; }
+  h2 { margin-top: 40px; }
+  .container { display: flex; flex-wrap: wrap; gap: 30px; }
+  .card { background:#222; padding: 20px; border-radius: 8px; width: 300px; }
+  label { display:block; margin-top: 15px; }
+  input[type=range] { width: 100%; }
+  .score { font-size: 1.4em; margin-top: 15px; text-align: center; color: #4caf50; }
+</style>
+</head>
+<body>
+
+<h1>Personal Fulfillment Score Explorer 🎢</h1>
+<p>Adjust the sliders and watch how fulfillment changes based on Process Joy, Uniqueness, Outcome Joy, and Admiration Quality.</p>
+
+<div class="container">
+  <div class="card" id="example1">
+    <h2>Ferrari</h2>
+    <label>Process Joy: <span id="pjoy1">1</span></label>
+    <input type="range" min="0" max="10" value="1" step="1" id="processJoy1" />
+    <label>Uniqueness: <span id="uniq1">2</span></label>
+    <input type="range" min="0" max="10" value="2" step="1" id="uniqueness1" />
+    <label>Outcome Joy: <span id="outcome1">8</span></label>
+    <input type="range" min="0" max="10" value="8" step="1" id="outcomeJoy1" />
+    <label>Admiration Quality: <span id="admire1">3</span></label>
+    <input type="range" min="0" max="10" value="3" step="1" id="admiration1" />
+    <div class="score">Fulfillment Score: <span id="score1"></span></div>
+  </div>
+
+  <div class="card" id="example2">
+    <h2>Weird Custom Car</h2>
+    <label>Process Joy: <span id="pjoy2">9</span></label>
+    <input type="range" min="0" max="10" value="9" step="1" id="processJoy2" />
+    <label>Uniqueness: <span id="uniq2">9</span></label>
+    <input type="range" min="0" max="10" value="9" step="1" id="uniqueness2" />
+    <label>Outcome Joy: <span id="outcome2">6</span></label>
+    <input type="range" min="0" max="10" value="6" step="1" id="outcomeJoy2" />
+    <label>Admiration Quality: <span id="admire2">9</span></label>
+    <input type="range" min="0" max="10" value="9" step="1" id="admiration2" />
+    <div class="score">Fulfillment Score: <span id="score2"></span></div>
+  </div>
+
+  <div class="card" id="example3">
+    <h2>Luxury Vacation vs. DIY Adventure</h2>
+    <label>Process Joy: <span id="pjoy3">4</span></label>
+    <input type="range" min="0" max="10" value="4" step="1" id="processJoy3" />
+    <label>Uniqueness: <span id="uniq3">7</span></label>
+    <input type="range" min="0" max="10" value="7" step="1" id="uniqueness3" />
+    <label>Outcome Joy: <span id="outcome3">7</span></label>
+    <input type="range" min="0" max="10" value="7" step="1" id="outcomeJoy3" />
+    <label>Admiration Quality: <span id="admire3">6</span></label>
+    <input type="range" min="0" max="10" value="6" step="1" id="admiration3" />
+    <div class="score">Fulfillment Score: <span id="score3"></span></div>
+  </div>
+</div>
+
+<script>
+function calcScore(pJoy, uniq, oJoy, admire) {
+  return (pJoy * uniq) + (oJoy * admire);
+}
+
+function updateExample(n) {
+  const pJoy = +document.getElementById('processJoy' + n).value;
+  const uniq = +document.getElementById('uniqueness' + n).value;
+  const oJoy = +document.getElementById('outcomeJoy' + n).value;
+  const admire = +document.getElementById('admiration' + n).value;
+
+  document.getElementById('pjoy' + n).textContent = pJoy;
+  document.getElementById('uniq' + n).textContent = uniq;
+  document.getElementById('outcome' + n).textContent = oJoy;
+  document.getElementById('admire' + n).textContent = admire;
+
+  const score = calcScore(pJoy, uniq, oJoy, admire);
+  document.getElementById('score' + n).textContent = score;
+}
+
+// Initialize all examples
+[1,2,3].forEach(n => {
+  updateExample(n);
+  ['processJoy','uniqueness','outcomeJoy','admiration'].forEach(idBase => {
+    document.getElementById(idBase + n).addEventListener('input', () => updateExample(n));
+  });
+});
+</script>
+
+</body>
+</html>
